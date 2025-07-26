@@ -127,7 +127,7 @@ const ResourcesPage = () => {
     if (tab === "Papers") params.paperCategory = selectedTerm;
 
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
-    const endpoint = tab === "Books" ? "/api/books" : "/api/papers";
+    const endpoint = tab === "Books" ? "/api/books" : "/api/paper";
 
     axios
       .get(`${baseUrl}${endpoint}`, { params })
