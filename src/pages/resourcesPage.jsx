@@ -10,88 +10,46 @@ const ResourcesPage = () => {
 
   const subjectsByGrade = {
   "06": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English",
-    "History",
-    "Geography",
-    "Tamil",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)"
+    "English"
   ],
   "07": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English",
-    "History",
-    "Geography",
-    "Tamil",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)"
+    "English"
   ],
   "08": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English",
-    "History",
-    "Geography",
-    "Tamil",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)"
+    "English"
   ],
   "09": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English",
-    "History",
-    "Geography",
-    "Tamil",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)",
-    "Information and Communication Technology (ICT)"
+    "English"
   ],
   "10": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English",
-    "History",
-    "Geography",
-    "Tamil",
-    "Commerce",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)",
-    "Information and Communication Technology (ICT)"
+    "English"
   ],
   "11": [
+    "ICT",
     "Mathematics",
     "Science",
     "Sinhala",
-    "English Literature",
-    "History",
-    "Geography",
-    "Tamil",
-    "Commerce",
-    "Health and Physical Education",
-    "Art",
-    "Religion (Buddhism/Christianity/Hinduism/Islam)",
-    "Information and Communication Technology (ICT)",
-    "Agriculture",
-    "Business Studies",
-    "Economics",
-    "Buddhism",
-    "Christianity",
-    "Hinduism",
-    "Islam"
+    "English"
   ],
 };
 
