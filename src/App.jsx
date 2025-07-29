@@ -3,6 +3,9 @@ import Header from './components/Header';
 import HomePage from "./pages/homePage";
 import ResourcesPage from "./pages/resourcesPage";
 import Footer from "./components/Footer";
+import About from "./pages/about";
+import Contact from "./pages/contact";
+import Gallery from "./pages/gallery";
 
 
 
@@ -16,8 +19,10 @@ export default function App() {
       <main className="px-4 py-6">
         <Routes>
           <Route path="/" element={<HomePage/>} />
-          <Route path="/contact" element={<h1 className="text-xl text-gray-600">Coming Soon</h1>} />
           <Route path="/resources" element={<ResourcesPage/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="/gallery" element={<Gallery/>} />  
         </Routes>
       </main>
 

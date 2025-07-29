@@ -2,6 +2,7 @@ import React, { useState } from "react"; // ✅ Fix useState undefined
 import { motion } from "framer-motion";
 import { BookOpenIcon, FileTextIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom"; // ✅ For redirect
+import HomeUploadsSection from "../components/HomeUploadsSection";
 
 const grades = ["06", "07", "08", "09", "10", "11"];
 
@@ -68,6 +69,8 @@ const HomePage = () => {
           </motion.div>
         ))}
       </div>
+
+      <HomeUploadsSection/>
     </div>
   );
 };

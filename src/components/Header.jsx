@@ -21,6 +21,7 @@ export default function Header() {
     { to: "/", label: t("home") },
     { to: "/about", label: t("about") },
     { to: "/contact", label: t("contact") },
+    { to: "/gallery", label: t("Gallery") },
   ];
 
   const languages = [
