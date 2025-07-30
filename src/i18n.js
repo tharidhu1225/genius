@@ -3,65 +3,42 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
+  .use(LanguageDetector)  // detect browser language automatically
+  .use(initReactI18next)  // passes i18n down to react-i18next
   .init({
     resources: {
       en: {
         translation: {
-          "E-Thaksalawa": "E-Thaksalawa",
-          home: "Home",
-          courses: "Courses",
-          about: "About",
-          contact: "Contact",
-          start_learning: "Start Learning",
-          select_medium: "Select Medium",
-          choose_medium: "-- Choose Medium --",
-          select_grade: "Select Grade",
-          choose_grade: "-- Choose Grade --",
-          grade: "Grade",
-          continue: "Continue",
-          please_select_both: "Please select both Medium and Grade."
-        },
+          "home": "Home",
+          "about": "About",
+          "contact": "Contact",
+          "Gallery": "Gallery",
+          "The House of Education": "The House of Education",
+          // add all your keys here
+        }
       },
       si: {
         translation: {
-          "E-Thaksalawa": "ඊ-තක්ෂලාව",
-          home: "මුල් පිටුව",
-          courses: "පාඨමාලා",
-          about: "අපි ගැන",
-          contact: "සම්බන්ධ වන්න",
-          start_learning: "ඉගෙනීම ආරම්භ කරන්න",
-          select_medium: "මාධ්‍යය තෝරන්න",
-          choose_medium: "-- මාධ්‍යය තෝරන්න --",
-          select_grade: "ශ්‍රේණිය තෝරන්න",
-          choose_grade: "-- ශ්‍රේණිය තෝරන්න --",
-          grade: "ශ්‍රේණිය",
-          continue: "ඉදිරියට යන්න",
-          please_select_both: "කරුණාකර මාධ්‍යය සහ ශ්‍රේණිය තෝරන්න."
-        },
+          "home": "මුල් පිටුව",
+          "about": "අපි ගැන",
+          "contact": "සම්බන්ධ වන්න",
+          "Gallery": "ගැලරි",
+          "The House of Education": "අධ්‍යාපන ගෘහය",
+        }
       },
       ta: {
         translation: {
-          "E-Thaksalawa": "இ-தக்ஷலாவா",
-          home: "முகப்பு",
-          courses: "பாடநெறிகள்",
-          about: "எங்களை பற்றி",
-          contact: "தொடர்பு",
-          start_learning: "கற்றலை தொடங்கு",
-          select_medium: "மொழியைத் தேர்ந்தெடுக்கவும்",
-          choose_medium: "-- மொழியைத் தேர்ந்தெடுக்கவும் --",
-          select_grade: "தரத்தைத் தேர்ந்தெடுக்கவும்",
-          choose_grade: "-- தரத்தைத் தேர்ந்தெடுக்கவும் --",
-          grade: "தரம்",
-          continue: "தொடரவும்",
-          please_select_both: "மொழியும் தரமும் தேர்ந்தெடுக்கவும்."
-        },
+          "home": "முகப்பு",
+          "about": "எங்களை பற்றி",
+          "contact": "தொடர்பு",
+          "Gallery": "கேலரி",
+          "The House of Education": "கல்வி இல்லம்",
+        }
       },
     },
-    fallbackLng: "en",
+    fallbackLng: 'en', // default language
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, // react already safes from xss
     },
   });
 

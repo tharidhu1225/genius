@@ -17,7 +17,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] px-4 py-8 font-sans">
       <header className="text-center mb-12">
         <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
-          Welcome to Smart School 📚
+          Welcome to Smart Home 📚
         </h1>
         <p className="text-lg sm:text-xl text-gray-600">
           Select your grade and explore {selectedTab === "Books" ? "books" : "past papers"} easily!

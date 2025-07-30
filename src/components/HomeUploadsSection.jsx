@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 const HomeUploadsSection = () => {
@@ -22,7 +22,6 @@ const HomeUploadsSection = () => {
     fetchUploads();
   }, []);
 
-  // ✅ ESC key handler
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") {
@@ -33,7 +32,6 @@ const HomeUploadsSection = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // ✅ Backdrop click handler
   const handleBackdropClick = (e) => {
     if (e.target.id === "image-modal-backdrop") {
       setSelectedImage(null);
@@ -41,42 +39,51 @@ const HomeUploadsSection = () => {
   };
 
   return (
-    <section className="mt-20 max-w-6xl mx-auto px-4">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-800 mb-3">Genius Smart Class</h2>
-        <p className="text-gray-600 text-lg">Check out the latest documents shared by the institute.</p>
+    <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold text-gray-800 mb-3">📚 Genius Smart Class Uploads</h2>
+        <p className="text-gray-600 text-lg">Explore the latest shared resources from your institute</p>
       </div>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading uploads...</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {Array(6).fill().map((_, i) => (
+            <div key={i} className="animate-pulse bg-white p-4 rounded-2xl shadow-md">
+              <div className="w-full h-40 bg-gray-200 rounded-lg mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-gray-300 rounded w-full mb-2"></div>
+              <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
       ) : uploads.length === 0 ? (
-        <p className="text-center text-gray-400">No uploads found.</p>
+        <p className="text-center text-gray-400 text-lg">No uploads found.</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {uploads.map((item) => (
             <motion.div
               key={item._id}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-white rounded-2xl shadow-md p-4 border border-gray-100 hover:shadow-xl transition-all"
+              className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100 hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={item.thumbnailUrl}
                 alt={`${item.title} preview`}
-                className="w-full h-40 object-cover rounded-lg mb-4 cursor-pointer"
+                className="w-full h-44 object-cover rounded-lg mb-4 cursor-pointer"
                 onClick={() => setSelectedImage(item.thumbnailUrl)}
               />
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">{item.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{item.description}</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-1">{item.title}</h3>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
               <a
                 href={item.thumbnailUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-medium transition"
+                className="block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
               >
                 View / Download
               </a>
-              <p className="text-xs text-gray-400 text-center mt-2">
+              <p className="text-xs text-gray-400 text-center mt-3">
                 Uploaded: {new Date(item.createdAt).toLocaleDateString()}
               </p>
             </motion.div>
@@ -84,24 +91,34 @@ const HomeUploadsSection = () => {
         </div>
       )}
 
-      {/* ✅ Full Image Modal with backdrop + ESC key close */}
-      {selectedImage && (
-        <div
-          id="image-modal-backdrop"
-          onClick={handleBackdropClick}
-          className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center"
-        >
-          <div className="relative max-w-4xl w-full p-4">
-            <button
-              className="absolute top-2 right-2 text-white text-3xl font-bold"
-              onClick={() => setSelectedImage(null)}
+      {/* 🖼️ Fullscreen Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            id="image-modal-backdrop"
+            onClick={handleBackdropClick}
+            className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative max-w-5xl w-full p-4"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
             >
-              ×
-            </button>
-            <img src={selectedImage} alt="Full Preview" className="w-full rounded-lg shadow-lg" />
-          </div>
-        </div>
-      )}
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-2 right-4 text-white text-3xl font-bold hover:text-red-400 transition"
+              >
+                &times;
+              </button>
+              <img src={selectedImage} alt="Full Preview" className="w-full rounded-xl shadow-lg" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

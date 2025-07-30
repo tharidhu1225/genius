@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Gallery from "./pages/gallery";
+import GalleryDetails from "./pages/galleryDetails";
 
 
 
@@ -22,7 +23,8 @@ export default function App() {
           <Route path="/resources" element={<ResourcesPage/>} />
           <Route path="/about" element={<About/>} />
           <Route path="/contact" element={<Contact/>} />
-          <Route path="/gallery" element={<Gallery/>} />  
+          <Route path="/gallery" element={<Gallery/>} /> 
+          <Route path="/gallery/:id" element={<GalleryDetails/>} />
         </Routes>
       </main>
 
