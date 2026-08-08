@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -8,9 +8,10 @@ export default function Header() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const currentLang = i18n.language?.split("-")[0];
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
   const closeMenu = () => setIsOpen(false);
-  const currentLang = i18n.language;
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -31,105 +32,343 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-gradient-to-r from-[#4E342E] to-[#6D4C41] text-white sticky top-0 z-50 shadow-xl">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-4 group">
-          <img
-            src="/logo.jpg"
-            alt="Genius Logo"
-            className="w-12 h-12 object-cover rounded-full border-2 border-yellow-400 group-hover:rotate-6 transition-transform"
-          />
-          <div className="leading-tight">
-            <h1 className="text-xl md:text-2xl font-extrabold tracking-wide group-hover:text-yellow-300 transition-colors">
-              Genius
-            </h1>
-            <p className="text-xs md:text-sm font-light text-yellow-100">
-              {t("The House of Education")}
-            </p>
-          </div>
-        </Link>
-
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
+    <>
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4">
+          <div
+            className="
+              relative flex items-center justify-between
+              h-16 md:h-[72px]
+              px-4 md:px-6
+              rounded-2xl
+              bg-[#3E2723]/90
+              backdrop-blur-xl
+              border border-white/10
+              shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+            "
+          >
+            {/* Logo */}
             <Link
-              key={link.to}
-              to={link.to}
-              className={`text-sm font-medium transition-colors duration-300 hover:text-yellow-300 ${
-                location.pathname === link.to ? "text-yellow-300 font-semibold" : "text-white"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          <div className="ml-6 flex gap-2 items-center border px-2 py-1 rounded-full bg-[#4E342E] shadow-inner">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => changeLanguage(lang.code)}
-                className={`text-sm px-2 py-0.5 rounded-full transition-all ${
-                  currentLang === lang.code
-                    ? "bg-yellow-300 text-[#4E342E] font-bold"
-                    : "text-white hover:text-yellow-200"
-                }`}
-              >
-                {lang.label}
-              </button>
-            ))}
-          </div>
-        </nav>
-
-        <button
-          onClick={toggleMenu}
-          className="md:hidden text-white z-50 focus:outline-none"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {isOpen && <div onClick={closeMenu} className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm" />}
-
-      <div
-        className={`fixed top-0 left-0 h-full w-72 bg-[#4E342E] text-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-6 pt-24 space-y-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
+              to="/"
               onClick={closeMenu}
-              className={`block text-lg font-medium hover:text-yellow-300 ${
-                location.pathname === link.to ? "text-yellow-300 font-bold" : ""
-              }`}
+              className="flex items-center gap-3 group"
             >
-              {link.label}
-            </Link>
-          ))}
+              <div className="relative">
+                <div
+                  className="
+                    absolute -inset-1 rounded-full
+                    bg-yellow-400/30
+                    blur-md
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-opacity duration-300
+                  "
+                />
 
-          <div className="border-t border-white/30 pt-6">
-            <p className="text-sm text-yellow-200 font-semibold mb-3">
+                <img
+                  src="/logo.jpg"
+                  alt="Genius Logo"
+                  className="
+                    relative
+                    w-10 h-10 md:w-12 md:h-12
+                    object-cover
+                    rounded-full
+                    border-2 border-yellow-400/80
+                    group-hover:scale-105
+                    group-hover:rotate-3
+                    transition-all duration-300
+                  "
+                />
+              </div>
+
+              <div className="leading-none">
+                <h1
+                  className="
+                    text-lg md:text-xl
+                    font-extrabold
+                    tracking-wide
+                    text-white
+                    group-hover:text-yellow-300
+                    transition-colors
+                  "
+                >
+                  Genius
+                </h1>
+
+                <p className="mt-1 text-[10px] md:text-xs text-yellow-100/80 tracking-wide">
+                  {t("The House of Education")}
+                </p>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.to;
+
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className={`
+                      relative px-4 py-2.5
+                      text-sm font-medium
+                      rounded-xl
+                      transition-all duration-300
+                      ${
+                        isActive
+                          ? "text-yellow-300 bg-white/10"
+                          : "text-white/80 hover:text-yellow-300 hover:bg-white/5"
+                      }
+                    `}
+                  >
+                    {link.label}
+
+                    {isActive && (
+                      <span
+                        className="
+                          absolute
+                          left-1/2 -translate-x-1/2
+                          -bottom-1
+                          w-5 h-0.5
+                          rounded-full
+                          bg-yellow-300
+                          shadow-[0_0_10px_rgba(253,224,71,0.8)]
+                        "
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+
+              {/* Language Selector */}
+              <div
+                className="
+                  ml-3
+                  flex items-center gap-1
+                  p-1
+                  rounded-xl
+                  bg-black/20
+                  border border-white/10
+                "
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang.code)}
+                    className={`
+                      px-2.5 py-1.5
+                      rounded-lg
+                      text-xs font-semibold
+                      transition-all duration-200
+                      ${
+                        currentLang === lang.code
+                          ? "bg-yellow-300 text-[#3E2723] shadow-sm"
+                          : "text-white/70 hover:text-white hover:bg-white/10"
+                      }
+                    `}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+              className="
+                md:hidden
+                flex items-center justify-center
+                w-10 h-10
+                rounded-xl
+                bg-white/10
+                border border-white/10
+                text-white
+                hover:bg-yellow-300
+                hover:text-[#3E2723]
+                transition-all duration-300
+              "
+            >
+              {isOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Overlay */}
+      <div
+        onClick={closeMenu}
+        className={`
+          fixed inset-0 z-40
+          bg-black/60
+          backdrop-blur-sm
+          transition-all duration-300
+          md:hidden
+          ${
+            isOpen
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none"
+          }
+        `}
+      />
+
+      {/* Mobile Drawer */}
+      <aside
+        className={`
+          fixed
+          top-0 right-0
+          h-full
+          w-[82%] max-w-sm
+          z-50
+          md:hidden
+          bg-gradient-to-b from-[#3E2723] via-[#4E342E] to-[#2D1B18]
+          border-l border-white/10
+          shadow-[-20px_0_60px_rgba(0,0,0,0.35)]
+          transition-transform duration-300 ease-out
+          ${
+            isOpen
+              ? "translate-x-0"
+              : "translate-x-full"
+          }
+        `}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between p-6 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo.jpg"
+              alt="Genius Logo"
+              className="
+                w-11 h-11
+                rounded-full
+                object-cover
+                border-2 border-yellow-400
+              "
+            />
+
+            <div>
+              <h2 className="text-lg font-bold text-white">Genius</h2>
+              <p className="text-xs text-yellow-100/70">
+                {t("The House of Education")}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={closeMenu}
+            className="
+              flex items-center justify-center
+              w-10 h-10
+              rounded-xl
+              bg-white/10
+              text-white
+              hover:bg-red-500/20
+              hover:text-red-300
+              transition-colors
+            "
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <div className="px-5 py-7">
+          <p className="mb-4 px-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-300/70">
+            Menu
+          </p>
+
+          <nav className="space-y-2">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.to;
+
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={closeMenu}
+                  className={`
+                    group
+                    flex items-center justify-between
+                    px-4 py-3.5
+                    rounded-xl
+                    text-base font-medium
+                    transition-all duration-200
+                    ${
+                      isActive
+                        ? "bg-yellow-300 text-[#3E2723] shadow-lg"
+                        : "text-white/85 hover:bg-white/10 hover:text-yellow-300"
+                    }
+                  `}
+                >
+                  <span>{link.label}</span>
+
+                  <ChevronDown
+                    className={`
+                      w-4 h-4 -rotate-90
+                      transition-transform
+                      ${
+                        isActive
+                          ? "text-[#3E2723]"
+                          : "text-white/40 group-hover:text-yellow-300"
+                      }
+                    `}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Language */}
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <p className="px-2 mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-300/70">
               {t("Language")}
             </p>
-            <div className="flex gap-4">
+
+            <div className="grid grid-cols-3 gap-2">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => changeLanguage(lang.code)}
-                  className={`text-sm font-medium ${
-                    currentLang === lang.code
-                      ? "text-yellow-300 underline"
-                      : "text-white hover:text-yellow-200"
-                  }`}
+                  className={`
+                    py-2.5
+                    rounded-xl
+                    text-sm font-semibold
+                    border
+                    transition-all duration-200
+                    ${
+                      currentLang === lang.code
+                        ? "bg-yellow-300 text-[#3E2723] border-yellow-300"
+                        : "bg-white/5 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
+                    }
+                  `}
                 >
                   {lang.label}
                 </button>
               ))}
             </div>
           </div>
+
+          {/* Bottom Decoration */}
+          <div className="mt-10">
+            <div className="h-px bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent" />
+
+            <p className="mt-5 text-center text-xs text-white/40">
+              {t("The House of Education")}
+            </p>
+          </div>
         </div>
-      </div>
-    </header>
+      </aside>
+
+      {/* Spacer so content doesn't hide behind fixed header */}
+      <div className="h-20 md:h-24" />
+    </>
   );
 }
+
